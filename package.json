@@ -1,0 +1,23 @@
+{
+  "name": "scp-sync",
+  "version": "1.0.0",
+  "description": "Auto sync local files to remote through ssh when files change",
+  "keywords": ["scp", "ssh", "sync"],
+  "main": "index.js",
+  "scripts": {},
+  "bin": {
+    "scp-sync": "bin/scp-sync"
+  },
+  "files": [ "index.js" ],
+  "author": "Basten Gao <bastengao@gmail.com> (http://bastengao.com)",
+  "bugs": {
+    "url": "https://github.com/bastengao/scp-sync/issues"
+  },
+  "homepage": "https://github.com/bastengao/scp-sync",
+  "license": "MIT",
+  "dependencies": {
+    "chokidar": "^1.6.0",
+    "scp2": "^0.5.0",
+    "yargs": "^4.8.0"
+  }
+}

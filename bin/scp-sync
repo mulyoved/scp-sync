@@ -1,0 +1,46 @@
+#!/usr/bin/env node
+
+var syncScp = require('../');
+var argv = require('yargs')
+            .usage('Usage: scp-sync -h [host] -p [port] -u [user] -P [password] source target')
+            .example('scp-sync -h 127.0.0.1 -p 22 -u vagrant -P vagrant source /home/vagrant/target', '')
+            .demand(2)
+            .help('help')
+            .demand('h')
+              .alias('h', 'host' )
+              .describe('h', 'Remote host')
+            .alias('p', 'port' )
+              .describe('p', 'Remote ssh port')
+            .demand('u')
+              .alias('u', 'username' )
+              .describe('u', 'Remote usernme')
+            .demand('P')
+              .alias('P', 'password' )
+              .describe('P', 'Remote password')
+            .argv;
+
+
+main(argv);
+
+function main(argv) {
+  console.log(argv)
+  
+  var ssh = {}
+  if (argv.host) {
+    ssh.host = argv.host;
+  }
+
+  if(argv.port) {
+    ssh.port = argv.port;
+  }
+
+  if(argv.username) {
+    ssh.username = argv.username;
+  }
+
+  if(argv.password) {
+    ssh.password = argv.password;
+  }
+
+  syncScp(argv._[0], argv._[1], ssh)
+}
