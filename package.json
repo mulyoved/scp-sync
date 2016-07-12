@@ -10,6 +10,10 @@
   },
   "files": [ "index.js" ],
   "author": "Basten Gao <bastengao@gmail.com> (http://bastengao.com)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bastengao/scp-sync.git"
+  },
   "bugs": {
     "url": "https://github.com/bastengao/scp-sync/issues"
   },
