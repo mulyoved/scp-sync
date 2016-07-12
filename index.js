@@ -14,7 +14,10 @@ var ssh = {
 
 function scpSync (source, target, ssh) {
   chokidar.watch(source).on('all', (event, path) => {
-    console.log(event, path);
+    if(event == 'change') {
+      console.log(event, path);
+    }
+    
     if(event == 'add' || event == 'change') {
       var options = extend({}, ssh)
       options.path = target + path;
