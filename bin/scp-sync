@@ -23,8 +23,6 @@ var argv = require('yargs')
 main(argv);
 
 function main(argv) {
-  console.log(argv)
-  
   var ssh = {}
   if (argv.host) {
     ssh.host = argv.host;
