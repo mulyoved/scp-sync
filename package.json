@@ -8,7 +8,10 @@
   "bin": {
     "scp-sync": "bin/scp-sync"
   },
-  "files": [ "index.js" ],
+  "files": [
+     "index.js",
+     "bin/" 
+  ],
   "author": "Basten Gao <bastengao@gmail.com> (http://bastengao.com)",
   "repository": {
     "type": "git",
