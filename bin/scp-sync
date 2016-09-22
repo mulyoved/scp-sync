@@ -1,9 +1,15 @@
 #!/usr/bin/env node
 
 var syncScp = require('../');
+var extend = require('util')._extend;
+var fs = require('fs');
+
+//Sample call
+//scp-sync -h 10.115.1.9 -x 40.87.64.165 -p 22 -u muly -k c:/Users/Muly/.ssh/id_rsa 'README.md' '/home/muly/temp/'
+
 var argv = require('yargs')
-            .usage('Usage: scp-sync -h [host] -p [port] -u [user] -P [password] source target')
-            .example('scp-sync -h 127.0.0.1 -p 22 -u vagrant -P vagrant source /home/vagrant/target', '')
+            .usage('Usage: scp-sync -h [host] -x [proxy] -p [port] -u [user] -P [password] -k [privatekey] -v [verbose] source target')
+            .example('scp-sync -h 127.0.0.2 -x 127.0.0.1 -p 22 -u vagrant -P vagrant source /home/vagrant/target', '')
             .demand(2)
             .help('help')
             .demand('h')
@@ -11,12 +17,17 @@ var argv = require('yargs')
               .describe('h', 'Remote host')
             .alias('p', 'port' )
               .describe('p', 'Remote ssh port')
+            .alias('x', 'proxy' )
+              .describe('x', 'Proxy host name')
+            .alias('k', 'privatekey' )
+              .describe('k', 'Private key path')
             .demand('u')
               .alias('u', 'username' )
               .describe('u', 'Remote usernme')
-            .demand('P')
-              .alias('P', 'password' )
+            .alias('P', 'password' )
               .describe('P', 'Remote password')
+            .alias('v', 'verbose' )
+              .describe('v', 'verbose')
             .argv;
 
 
@@ -40,5 +51,22 @@ function main(argv) {
     ssh.password = argv.password;
   }
 
-  syncScp(argv._[0], argv._[1], ssh)
+  if(argv.privatekey) {
+    ssh.privateKey = fs.readFileSync(argv.privatekey);
+  }
+
+  if(argv.verbose) {
+    ssh.debug = console.log.bind(console);
+  } else {
+    ssh.debug = function() {};
+  }
+
+  if(argv.proxy) {
+    var ssh1 = extend({}, ssh)
+    ssh1.host = argv.proxy;
+    syncScp(argv._[0], argv._[1], ssh1, ssh);
+  } else {
+    syncScp(argv._[0], argv._[1], ssh);    
+  }
+
 }
